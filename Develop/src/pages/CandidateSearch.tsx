@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { searchGithubUser } from "../api/API";
-
 interface GitHubUser {
   login: string;
   name?: string;
