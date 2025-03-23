@@ -24,6 +24,7 @@ const CandidateSearch = () => {
     if (user) {
       setCandidate(user);
       setError("");
+      setSearchInput(""); // Clear input after successful search
     } else {
       setCandidate(null);
       setError("User not found or an error occurred.");
@@ -45,6 +46,8 @@ const CandidateSearch = () => {
       storedCandidates.push(candidate);
       localStorage.setItem("candidates", JSON.stringify(storedCandidates));
       alert("Candidate saved successfully!");
+    } else {
+      alert("This candidate is already saved.");
     }
   };
 
