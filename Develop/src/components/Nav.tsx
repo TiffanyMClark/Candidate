@@ -12,26 +12,22 @@ const Nav = () => {
       </h1>
       <ul className="nav nav-tabs">
         <li className="nav-item">
-          <h2>
-            <Link
-              to="/"
-              className={location === "/" ? "nav-link active" : "nav-link"}
-            >
-              Search Candidates
-            </Link>
-          </h2>
+          <Link
+            to="/"
+            className={location === "/" ? "nav-link active" : "nav-link"}
+          >
+            Search Candidates
+          </Link>
         </li>
         <li className="nav-item">
-          <h2>
-            <Link
-              to="/SavedCandidates"
-              className={
-                location === "/SavedCandidates" ? "nav-link active" : "nav-link"
-              }
-            >
-              Saved Candidates
-            </Link>
-          </h2>
+          <Link
+            to="/SavedCandidates"
+            className={
+              location === "/SavedCandidates" ? "nav-link active" : "nav-link"
+            }
+          >
+            Saved Candidates
+          </Link>
         </li>
       </ul>
     </nav>

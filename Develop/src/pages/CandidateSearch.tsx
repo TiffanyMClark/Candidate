@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { searchGithubUser } from "../api/API";
+
 interface GitHubUser {
   login: string;
   name?: string;
@@ -29,6 +30,24 @@ const CandidateSearch = () => {
     }
   };
 
+  // Save the candidate to localStorage
+  const saveCandidate = () => {
+    if (!candidate) return;
+
+    // Retrieve existing candidates from localStorage
+    const storedCandidates = JSON.parse(
+      localStorage.getItem("candidates") || "[]"
+    );
+
+    if (
+      !storedCandidates.some((c: GitHubUser) => c.login === candidate.login)
+    ) {
+      storedCandidates.push(candidate);
+      localStorage.setItem("candidates", JSON.stringify(storedCandidates));
+      alert("Candidate saved successfully!");
+    }
+  };
+
   return (
     <div>
       <header>
@@ -46,8 +65,7 @@ const CandidateSearch = () => {
           <button type="submit">Search</button>
         </form>
       </section>
-      {error && <p style={{ color: "red" }}>{error}</p>}{" "}
-      {/* Show error message if any */}
+      {error && <p style={{ color: "red" }}>{error}</p>}
       {candidate && candidate.login ? (
         <div>
           <h2>{candidate.name || "No Name Available"}</h2>
@@ -60,6 +78,9 @@ const CandidateSearch = () => {
           >
             View Profile
           </a>
+
+          {/* Add Save Candidate Button */}
+          <button onClick={saveCandidate}>Save Candidate</button>
         </div>
       ) : (
         <p>No candidate found.</p>

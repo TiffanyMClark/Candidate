@@ -9,4 +9,6 @@ export default interface Candidate {
   public_repos: number;
   site_admin: boolean;
   type: string;
+  name?: string;
+  bio?: string;
 }
