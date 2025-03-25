@@ -6,7 +6,7 @@ export default interface Candidate {
   html_url: string;
   followers: number;
   following: number;
-  public_repos: number;
+  email: string;
   site_admin: boolean;
   type: string;
   name?: string;

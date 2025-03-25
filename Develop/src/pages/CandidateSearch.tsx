@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { searchGithubUser } from "../api/API";
+import { searchGithub } from "../api/API";
+import { useEffect } from "react";
 
 interface GitHubUser {
   login: string;
@@ -7,24 +8,24 @@ interface GitHubUser {
   avatar_url: string;
   bio?: string;
   html_url: string;
+  email: string;
+  location: string;
+  organizations_url: string;
+  company: string;
 }
 
 const CandidateSearch = () => {
-  const [searchInput, setSearchInput] = useState("");
+  //const [searchInput, setSearchInput] = useState("");
   const [candidate, setCandidate] = useState<GitHubUser | null>(null);
   const [error, setError] = useState<string>("");
 
-  const handleSearch = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!searchInput.trim()) return;
-
-    const user = await searchGithubUser(searchInput);
-
+  const renderRandomCandidate = async () => {
+    const userArray = await searchGithub();
+    const user = userArray[0];
     if (user) {
       setCandidate(user);
       setError("");
-      setSearchInput(""); // Clear input after successful search
+      // Clear input after successful search
     } else {
       setCandidate(null);
       setError("User not found or an error occurred.");
@@ -50,14 +51,16 @@ const CandidateSearch = () => {
       alert("This candidate is already saved.");
     }
   };
-
+  useEffect(() => {
+    renderRandomCandidate();
+  }, []);
+  console.log("Here is candidate", candidate);
   return (
     <div>
       <header>
         <h1>Candidate Search</h1>
-        <p>Find GitHub users by searching their username.</p>
       </header>
-      <section id="searchSection">
+      {/* <section id="searchSection">
         <form onSubmit={handleSearch}>
           <input
             type="text"
@@ -67,20 +70,18 @@ const CandidateSearch = () => {
           />
           <button type="submit">Search</button>
         </form>
-      </section>
+      </section> */}
       {error && <p style={{ color: "red" }}>{error}</p>}
       {candidate && candidate.login ? (
         <div>
-          <h2>{candidate.name || "No Name Available"}</h2>
+          <h2>{candidate.login || "No Name Available"}</h2>
           <img src={candidate.avatar_url} alt="Profile" width={100} />
+          <h2>{candidate.email || "No email Available"}</h2>
           <p>{candidate.bio || "No bio available."}</p>
-          <a
-            href={candidate.html_url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View Profile
-          </a>
+          <p>{candidate.location || "No location available."}</p>
+          <p>{candidate.organizations_url || "No organization available."}</p>
+          <p>{candidate.company || "No company available."}</p>
+          <button onClick={renderRandomCandidate}>Next Candidate</button>
 
           {/* Add Save Candidate Button */}
           <button onClick={saveCandidate}>Save Candidate</button>

@@ -47,7 +47,6 @@ const SavedCandidates = () => {
                 View Profile
               </a>
 
-              {/* Red - Button to Remove */}
               <button
                 className="remove"
                 onClick={() => removeSavedCandidate(candidate.login)}
