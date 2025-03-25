@@ -7,7 +7,7 @@ const Nav = () => {
     <nav>
       <h1>
         <Link to="/" id="logo">
-          Candidate Search App
+          Candidate Search App.
         </Link>
       </h1>
       <ul className="nav nav-tabs">
